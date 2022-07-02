@@ -192,18 +192,20 @@ class KeyNeuralNet(KeyClassifier):
         self.solution = solution
 
     def keySelector(self, distance, speed, obType):
+        
         tipo = 0
-        if isinstance(obType, Bird):
+
+        if isinstance(obType, LargeCactus):
             tipo = 1
+        if isinstance(obType, Bird):
+            tipo = 2
         
         data_in = np.array([[distance,speed,tipo]])
         prediction = pygad.kerasga.predict(model=self.net,solution=self.solution,data=data_in)
-        action = np.argmax(prediction[0])
-        if action == 0:
-            return "K_NO"
-        elif action == 1:
+        action = prediction[0]
+        if action[0] > 0:
             return "K_DOWN"
-        elif action == 2:
+        elif action[1] > 0:
             return "K_UP"        
         
         return "K_NO"
@@ -323,12 +325,16 @@ def main():
     file = open("generations.txt",mode='w') #resetar o arquivo
     file.close()
 
-    ga_instance = pygad.GA(num_generations=200,
+    ga_instance = pygad.GA(num_generations=250,
                             num_parents_mating=5,
                             initial_population=net_genetic_alg.population_weights,
                             fitness_func=fitness_func,
                             on_generation=on_generation,
-                            suppress_warnings=True)
+                            suppress_warnings=True,
+                            mutation_probability=0.2,
+                            keep_parents=3,
+                            stop_criteria=["reach_10000", "saturate_50"],
+                            crossover_probability=0.8)
     
     ga_instance.run()
 
