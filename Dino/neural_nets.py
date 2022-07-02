@@ -16,5 +16,5 @@ def on_generation(ga_instance):
     file.write("Fitness    = {fitness}\n\n".format(fitness=ga_instance.best_solution(ga_instance.last_generation_fitness)[1]))
     file.close()
     score = ga_instance.best_solution(ga_instance.last_generation_fitness)[1]
-    if score > 0:
+    if score > 10000:
         return 'stop'
