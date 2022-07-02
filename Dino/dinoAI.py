@@ -299,7 +299,7 @@ def manyPlaysResults(rounds):
   for round in range (rounds):
     results += [playGame()]
   npResults = np.asarray(results)
-  return npResults.mean()
+  return results,npResults.mean()
 
 from neural_nets import net_genetic_alg
 from neural_nets import net
@@ -310,29 +310,47 @@ def fitness_func(solution,solution_idx):
     global aiPlayer
     aiPlayer = KeyNeuralNet(net,solution)
 
-    return manyPlaysResults(3)
+    return manyPlaysResults(1)[1]
 
 
+import sys
+from datetime import datetime
 
 def main():
   
-  ga_instance = pygad.GA(num_generations=10,
-                        num_parents_mating=5,
-                        initial_population=net_genetic_alg.population_weights,
-                        fitness_func=fitness_func,
-                        on_generation=on_generation,
-                        suppress_warnings=True)
-  
-  ga_instance.run()
+  if sys.argv[1] == '0':
+    #Treina a rede e salva
+    file = open("generations.txt",mode='w') #resetar o arquivo
+    file.close()
 
-  solution, solution_fitness, solution_idx = ga_instance.best_solution()
-  
-  print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
-  print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
+    ga_instance = pygad.GA(num_generations=200,
+                            num_parents_mating=5,
+                            initial_population=net_genetic_alg.population_weights,
+                            fitness_func=fitness_func,
+                            on_generation=on_generation,
+                            suppress_warnings=True)
+    
+    ga_instance.run()
 
-  aiPlayer = KeyNeuralNet(net,solution)
-  #res, value = manyPlaysResults(30)
-  #npRes = np.asarray(res)
-  #print (res, npRes.mean(), npRes.std(), value)
+    now = datetime.now()
+    date = now.strftime("%d-%m-%Y-%H-%M-%S")
+    filename = f'solution_{date}'
+    ga_instance.save(filename=filename)
+    
+    return
+ 
+  if sys.argv[1] == '1':
+    #Avalia a rede neural
+    filename = sys.argv[2].replace('.pkl','')
+    loaded_ga_instance = pygad.load(filename=filename)
+    aiPlayer = KeyNeuralNet(net,loaded_ga_instance.best_solution()[0])
+    res, _ = manyPlaysResults(3)
+    npRes = np.asarray(res)
+
+    now = datetime.now()
+    date = now.strftime("%d-%m-%Y-%H-%M-%S")
+    np.save(f'scores_{date}',npRes)
+    return
+  
 
 main()
