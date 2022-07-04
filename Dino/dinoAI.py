@@ -2,7 +2,12 @@ import pygame
 import os
 import random
 import time
+from sys import exit
+
 pygame.init()
+
+# Valid values: HUMAN_MODE or AI_MODE
+GAME_MODE = "AI_MODE"
 
 # Global Constants
 SCREEN_HEIGHT = 600
@@ -20,7 +25,8 @@ SMALL_CACTUS = [pygame.image.load(os.path.join("Assets/Cactus", "SmallCactus1.pn
                 pygame.image.load(os.path.join("Assets/Cactus", "SmallCactus3.png"))]
 LARGE_CACTUS = [pygame.image.load(os.path.join("Assets/Cactus", "LargeCactus1.png")),
                 pygame.image.load(os.path.join("Assets/Cactus", "LargeCactus2.png")),
-                pygame.image.load(os.path.join("Assets/Cactus", "LargeCactus3.png"))]
+                pygame.image.load(os.path.join("Assets/Cactus", "LargeCactus3.png")),
+                pygame.image.load(os.path.join("Assets/Cactus", "LargeCactus4.png"))]
 
 BIRD = [pygame.image.load(os.path.join("Assets/Bird", "Bird1.png")),
         pygame.image.load(os.path.join("Assets/Bird", "Bird2.png"))]
@@ -31,10 +37,11 @@ BG = pygame.image.load(os.path.join("Assets/Other", "Track.png"))
 
 
 class Dinosaur:
-    X_POS = 80
-    Y_POS = 310
-    Y_POS_DUCK = 340
-    JUMP_VEL = 8.5
+    X_POS = 90
+    Y_POS = 330
+    Y_POS_DUCK = 355
+    JUMP_VEL = 17
+    JUMP_GRAV = 1.1
 
     def __init__(self):
         self.duck_img = DUCKING
@@ -46,21 +53,22 @@ class Dinosaur:
         self.dino_jump = False
 
         self.step_index = 0
-        self.jump_vel = self.JUMP_VEL
+        self.jump_vel = 0
+        self.jump_grav = self.JUMP_VEL
         self.image = self.run_img[0]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.X_POS
         self.dino_rect.y = self.Y_POS
 
     def update(self, userInput):
-        if self.dino_duck:
+        if self.dino_duck and not self.dino_jump:
             self.duck()
         if self.dino_run:
             self.run()
         if self.dino_jump:
             self.jump()
 
-        if self.step_index >= 10:
+        if self.step_index >= 20:
             self.step_index = 0
 
         if userInput == "K_UP" and not self.dino_jump:
@@ -71,20 +79,24 @@ class Dinosaur:
             self.dino_duck = True
             self.dino_run = False
             self.dino_jump = False
+        elif userInput == "K_DOWN":
+            self.dino_duck = True
+            self.dino_run = False
+            self.dino_jump = True
         elif not (self.dino_jump or userInput == "K_DOWN"):
             self.dino_duck = False
             self.dino_run = True
             self.dino_jump = False
 
     def duck(self):
-        self.image = self.duck_img[self.step_index // 5]
+        self.image = self.duck_img[self.step_index // 10]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.X_POS
         self.dino_rect.y = self.Y_POS_DUCK
         self.step_index += 1
 
     def run(self):
-        self.image = self.run_img[self.step_index // 5]
+        self.image = self.run_img[self.step_index // 10]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.X_POS
         self.dino_rect.y = self.Y_POS
@@ -92,18 +104,21 @@ class Dinosaur:
 
     def jump(self):
         self.image = self.jump_img
+        if self.dino_duck:
+            self.jump_grav = self.JUMP_GRAV * 4
         if self.dino_jump:
-            self.dino_rect.y -= self.jump_vel * 4
-            self.jump_vel -= 0.8
-        if self.jump_vel < - self.JUMP_VEL:
+            self.dino_rect.y -= self.jump_vel
+            self.jump_vel -= self.jump_grav
+        if self.dino_rect.y > self.Y_POS + 10:
             self.dino_jump = False
             self.jump_vel = self.JUMP_VEL
+            self.jump_grav = self.JUMP_GRAV
             self.dino_rect.y = self.Y_POS
 
     def draw(self, SCREEN):
         SCREEN.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
 
-    def getXY (self):
+    def getXY(self):
         return (self.dino_rect.x, self.dino_rect.y)
 
 
@@ -124,66 +139,78 @@ class Cloud:
         SCREEN.blit(self.image, (self.x, self.y))
 
 
-class Obstacle:
+class Obstacle():
     def __init__(self, image, type):
+        super().__init__()
         self.image = image
         self.type = type
         self.rect = self.image[self.type].get_rect()
+
         self.rect.x = SCREEN_WIDTH
 
     def update(self):
         self.rect.x -= game_speed
-        if self.rect.x < -self.rect.width:
-            obstacles.pop()
+        if self.rect.x < - self.rect.width:
+            obstacles.pop(0)
 
     def draw(self, SCREEN):
         SCREEN.blit(self.image[self.type], self.rect)
 
-    def getXY (self):
+    def getXY(self):
         return (self.rect.x, self.rect.y)
 
-    def getType (self):
-        return(self.type)
+    def getHeight(self):
+        return y_pos_bg - self.rect.y
+
+    def getType(self):
+        return (self.type)
 
 
 class SmallCactus(Obstacle):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
-        self.rect.y = 325
+        self.rect.y = 345
 
 
 class LargeCactus(Obstacle):
     def __init__(self, image):
         self.type = random.randint(0, 2)
         super().__init__(image, self.type)
-        self.rect.y = 300
+        self.rect.y = 325
 
 
 class Bird(Obstacle):
     def __init__(self, image):
         self.type = 0
         super().__init__(image, self.type)
-        self.rect.y = 250
+
+        # High, middle or ground
+        if random.randint(0, 3) == 0:
+            self.rect.y = 345
+        elif random.randint(0, 2) == 0:
+            self.rect.y = 260
+        else:
+            self.rect.y = 300
         self.index = 0
 
     def draw(self, SCREEN):
-        if self.index >= 9:
+        if self.index >= 19:
             self.index = 0
-        SCREEN.blit(self.image[self.index//5], self.rect)
+        SCREEN.blit(self.image[self.index // 10], self.rect)
         self.index += 1
 
+
 class KeyClassifier:
-    def __init__(self, state): 
+    def __init__(self, state):
         pass
 
-    def keySelector(self, distance, speed, obType):
+    def keySelector(self, distance, obHeight, speed, obType):
         pass
 
     def updateState(self, state):
         pass
 
-from scipy import stats
 import numpy as np
 
 class KeyNeuralNet(KeyClassifier):
@@ -191,7 +218,7 @@ class KeyNeuralNet(KeyClassifier):
         self.net = net
         self.solution = solution
 
-    def keySelector(self, distance, speed, obType):
+    def keySelector(self, distance, obHeight, speed, obType):
         
         tipo = 0
 
@@ -200,7 +227,7 @@ class KeyNeuralNet(KeyClassifier):
         if isinstance(obType, Bird):
             tipo = 2
         
-        data_in = np.array([[distance,speed,tipo]])
+        data_in = np.array([[distance, obHeight, speed,tipo]])
         prediction = pygad.kerasga.predict(model=self.net,solution=self.solution,data=data_in)
         action = prediction[0]
         if action[0] > 0:
@@ -210,8 +237,17 @@ class KeyNeuralNet(KeyClassifier):
         
         return "K_NO"
 
-    def updateState(self, state):
-        self.state = state
+
+def playerKeySelector():
+    userInputArray = pygame.key.get_pressed()
+
+    if userInputArray[pygame.K_UP]:
+        return "K_UP"
+    elif userInputArray[pygame.K_DOWN]:
+        return "K_DOWN"
+    else:
+        return "K_NO"
+
 
 def playGame():
     global game_speed, x_pos_bg, y_pos_bg, points, obstacles
@@ -219,21 +255,22 @@ def playGame():
     clock = pygame.time.Clock()
     player = Dinosaur()
     cloud = Cloud()
-    game_speed = 20
+    game_speed = 10
     x_pos_bg = 0
-    y_pos_bg = 380
+    y_pos_bg = 383
     points = 0
     font = pygame.font.Font('freesansbold.ttf', 20)
     obstacles = []
     death_count = 0
+    spawn_dist = 0
 
     def score():
         global points, game_speed
-        points += 1
+        points += 0.25
         if points % 100 == 0:
             game_speed += 1
 
-        text = font.render("Points: " + str(points), True, (0, 0, 0))
+        text = font.render("Points: " + str(int(points)), True, (0, 0, 0))
         textRect = text.get_rect()
         textRect.center = (1000, 40)
         SCREEN.blit(text, textRect)
@@ -252,36 +289,39 @@ def playGame():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+                exit()
 
         SCREEN.fill((255, 255, 255))
 
         distance = 1500
+        obHeight = 0
         obType = 2
         if len(obstacles) != 0:
-           xy = obstacles[0].getXY()
-           distance = xy[0]
-           obType = obstacles[0]
+            xy = obstacles[0].getXY()
+            distance = xy[0]
+            obHeight = obstacles[0].getHeight()
+            obType = obstacles[0]
 
-        userInput = aiPlayer.keySelector(distance, game_speed, obType)
-         
-        player.draw(SCREEN)
-        player.update(userInput)
+        if GAME_MODE == "HUMAN_MODE":
+            userInput = playerKeySelector()
+        else:
+            userInput = aiPlayer.keySelector(distance, obHeight, game_speed, obType)
 
-        if len(obstacles) == 0:
+        if len(obstacles) == 0 or obstacles[-1].getXY()[0] < spawn_dist:
+            spawn_dist = random.randint(0, 670)
             if random.randint(0, 2) == 0:
                 obstacles.append(SmallCactus(SMALL_CACTUS))
             elif random.randint(0, 2) == 1:
                 obstacles.append(LargeCactus(LARGE_CACTUS))
-            elif random.randint(0, 2) == 2:
+            elif random.randint(0, 5) == 5:
                 obstacles.append(Bird(BIRD))
 
-        for obstacle in obstacles:
-            obstacle.draw(SCREEN)
+        player.update(userInput)
+        player.draw(SCREEN)
+
+        for obstacle in list(obstacles):
             obstacle.update()
-            if player.dino_rect.colliderect(obstacle.rect):
-                pygame.time.delay(2000)
-                death_count += 1
-                return points
+            obstacle.draw(SCREEN)
 
         background()
 
@@ -290,10 +330,17 @@ def playGame():
 
         score()
 
-        clock.tick(30)
+        clock.tick(60)
         pygame.display.update()
 
+        for obstacle in obstacles:
+            if player.dino_rect.colliderect(obstacle.rect):
+                pygame.time.delay(2000)
+                death_count += 1
+                return points
 
+
+# Change State Operator
 
 def manyPlaysResults(rounds):
 
@@ -326,15 +373,15 @@ def main():
     file.close()
 
     ga_instance = pygad.GA(num_generations=250,
-                            num_parents_mating=5,
+                            num_parents_mating=2,
                             initial_population=net_genetic_alg.population_weights,
                             fitness_func=fitness_func,
                             on_generation=on_generation,
                             suppress_warnings=True,
-                            mutation_probability=0.2,
-                            keep_parents=3,
-                            stop_criteria=["reach_10000", "saturate_50"],
-                            crossover_probability=0.8)
+                            mutation_probability=1,
+                            keep_parents=1,
+                            stop_criteria=["reach_10000", "saturate_100"],
+                            mutation_type='random')
     
     ga_instance.run()
 

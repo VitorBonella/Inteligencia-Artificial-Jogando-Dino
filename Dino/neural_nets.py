@@ -2,7 +2,7 @@ import tensorflow
 import pygad.kerasga
 import pygad
 
-input_layer = tensorflow.keras.layers.Input(3)
+input_layer = tensorflow.keras.layers.Input(4)
 neurons_layer = tensorflow.keras.layers.Dense(4,activation='relu')(input_layer)
 output_layer = tensorflow.keras.layers.Dense(2,activation='relu')(neurons_layer)
 
