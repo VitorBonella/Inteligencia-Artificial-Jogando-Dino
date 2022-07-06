@@ -218,16 +218,14 @@ class KeyNeuralNet(KeyClassifier):
         self.net = net
         self.solution = solution
 
-    def keySelector(self, distance, obHeight, speed, obType):
+    def keySelector(self, distance, obHeight, obType, speed, dinoHeight):
+        #distance - > distancia do dinossauro pro obstaculo
+        #obHeight -> Altura do obstaculo
+        #obType -> tipo do obstaculo (Bird(1) ; SmallCactus(2) ; LargeCactus(3))
+        #speed -> velocidade do cenario
+        #dinoHeight -> altura do dinossauro
         
-        tipo = 0
-
-        if isinstance(obType, LargeCactus):
-            tipo = 1
-        if isinstance(obType, Bird):
-            tipo = 2
-        
-        data_in = np.array([[distance, obHeight, speed,tipo]])
+        data_in = np.array([[distance, obHeight, obType, speed, dinoHeight]])
         prediction = pygad.kerasga.predict(model=self.net,solution=self.solution,data=data_in)
         action = prediction[0]
         if action[0] > 0:
@@ -248,6 +246,13 @@ def playerKeySelector():
     else:
         return "K_NO"
 
+def get_type_object(type):
+    if isinstance(type,Bird):
+        return 1
+    elif isinstance(type,SmallCactus):
+        return 2
+    else:
+        return 3
 
 def playGame():
     global game_speed, x_pos_bg, y_pos_bg, points, obstacles
@@ -295,17 +300,21 @@ def playGame():
 
         distance = 1500
         obHeight = 0
-        obType = 2
+        obType = 0
+        dinoHeight = 0
         if len(obstacles) != 0:
             xy = obstacles[0].getXY()
             distance = xy[0]
             obHeight = obstacles[0].getHeight()
-            obType = obstacles[0]
-
+            obType = get_type_object(obstacles[0])
+        
+        dinoHeight = player.getXY()[1]
+        
         if GAME_MODE == "HUMAN_MODE":
             userInput = playerKeySelector()
         else:
-            userInput = aiPlayer.keySelector(distance, obHeight, game_speed, obType)
+            #keySelector (distance, obHeight, obType, speed, dinoHeight)
+            userInput = aiPlayer.keySelector(distance, obHeight, obType, game_speed, dinoHeight)
 
         if len(obstacles) == 0 or obstacles[-1].getXY()[0] < spawn_dist:
             spawn_dist = random.randint(0, 670)
