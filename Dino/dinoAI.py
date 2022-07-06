@@ -365,25 +365,45 @@ def fitness_func(solution,solution_idx):
 import sys
 from datetime import datetime
 
+def fitness_wrapper(solution):
+    return fitness_func(solution, 0)
+
+class PooledGA(pygad.GA):
+
+    def cal_pop_fitness(self):
+        global pool
+        pop_fitness = pool.map(fitness_wrapper, self.population)
+        print(pop_fitness)
+        pop_fitness = np.array(pop_fitness)
+        return pop_fitness
+
+
+from multiprocessing import Pool
+import multiprocessing as mp
+
+
 def main():
+  global pool
   
   if sys.argv[1] == '0':
     #Treina a rede e salva
     file = open("generations.txt",mode='w') #resetar o arquivo
     file.close()
 
-    ga_instance = pygad.GA(num_generations=250,
-                            num_parents_mating=2,
+    ga_instance = PooledGA(num_generations=100,
+                            num_parents_mating=5,
                             initial_population=net_genetic_alg.population_weights,
                             fitness_func=fitness_func,
                             on_generation=on_generation,
                             suppress_warnings=True,
-                            mutation_probability=1,
-                            keep_parents=1,
+                            mutation_probability=0.15,
+                            keep_parents=3,
                             stop_criteria=["reach_10000", "saturate_100"],
-                            mutation_type='random')
+                            mutation_type='random',
+                            crossover_probability=0.8)
     
-    ga_instance.run()
+    with Pool(processes=5) as pool:
+        ga_instance.run()
 
     now = datetime.now()
     date = now.strftime("%d-%m-%Y-%H-%M-%S")
@@ -395,6 +415,8 @@ def main():
   if sys.argv[1] == '1':
     #Avalia a rede neural
     filename = sys.argv[2].replace('.pkl','')
+    pool = Pool(1)
+    
     loaded_ga_instance = pygad.load(filename=filename)
     aiPlayer = KeyNeuralNet(net,loaded_ga_instance.best_solution()[0])
     res, _ = manyPlaysResults(3)
@@ -406,4 +428,6 @@ def main():
     return
   
 
-main()
+if __name__ == '__main__':
+    mp.set_start_method('forkserver')
+    main()
