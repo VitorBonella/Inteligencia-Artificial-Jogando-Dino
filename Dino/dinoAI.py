@@ -1,3 +1,4 @@
+from statistics import mean,stdev
 import pygame
 import os
 import random
@@ -297,12 +298,12 @@ def playGame(population):
 
         distance = 1500
         obHeight = 0
-        obType = 2
+        altitude = 0
         if len(obstacles) != 0:
             xy = obstacles[0].getXY()
             distance = xy[0]
+            altitude = xy[1]
             obHeight = obstacles[0].getHeight()
-            obType = get_numeric_type(obstacles[0])
 
         #if GAME_MODE == "HUMAN_MODE":
             #userInput = playerKeySelector()
@@ -321,7 +322,7 @@ def playGame(population):
         for i, player in enumerate(players):
             if not died[i]:
                 dinoHeight = player.getXY()[1]
-                userInput = net_player[i].keySelector(distance, obHeight, game_speed, dinoHeight)
+                userInput = net_player[i].keySelector(distance, obHeight, game_speed, dinoHeight, altitude)
                 player.update(userInput)
                 player.draw(SCREEN)
 
@@ -360,9 +361,11 @@ class KeyNeuralNet(KeyClassifier):
         self.model = model
         self.solution = solution
 
-    def keySelector(self, distance, obHeight, speed,dinoHeight):
+    def keySelector(self, distance, obHeight, speed,dinoHeight, altitude):
         
-        data_in = torch.tensor([[distance, obHeight, speed, dinoHeight]],dtype=torch.float32)
+        #features ideal* - > speed, distance, obWidth, obHeight, altitude ,dinoHeigth
+
+        data_in = torch.tensor([[distance, obHeight, speed, dinoHeight, altitude]],dtype=torch.float32)
         prediction = pygad.torchga.predict(model=self.model,solution=self.solution,data=data_in)
         action = prediction[0]
         if action[0] > 0:
@@ -391,40 +394,97 @@ def fitness_func(solution,solution_idx):
 #Paralel Train GA
 class PTGA(pygad.GA):
 
+    def __init__(self, num_generations, num_parents_mating, fitness_func, initial_population=None, sol_per_pop=None, num_genes=None, init_range_low=-4, init_range_high=4, gene_type=float, parent_selection_type="sss", keep_parents=-1, K_tournament=3, crossover_type="single_point", crossover_probability=None, mutation_type="random", mutation_probability=None, mutation_by_replacement=False, mutation_percent_genes='default', mutation_num_genes=None, random_mutation_min_val=-1, random_mutation_max_val=1, gene_space=None, allow_duplicate_genes=True, on_start=None, on_fitness=None, on_parents=None, on_crossover=None, on_mutation=None, callback_generation=None, on_generation=None, on_stop=None, delay_after_gen=0, save_best_solutions=False, save_solutions=False, suppress_warnings=False, stop_criteria=None, parallel_processing=None):
+        super().__init__(num_generations, num_parents_mating, fitness_func, initial_population, sol_per_pop, num_genes, init_range_low, init_range_high, gene_type, parent_selection_type, keep_parents, K_tournament, crossover_type, crossover_probability, mutation_type, mutation_probability, mutation_by_replacement, mutation_percent_genes, mutation_num_genes, random_mutation_min_val, random_mutation_max_val, gene_space, allow_duplicate_genes, on_start, on_fitness, on_parents, on_crossover, on_mutation, callback_generation, on_generation, on_stop, delay_after_gen, save_best_solutions, save_solutions, suppress_warnings, stop_criteria, parallel_processing)
+        self.my_best = 0
+        self.best_score = 0
+
     def cal_pop_fitness(self):
 
         pop_fitness = playGame(self.population)
-        print(pop_fitness)
-        return pop_fitness
+        #print(pop_fitness)
+        max = 0
+        max_id = 0
+        for i, _ in enumerate(pop_fitness):
+            if pop_fitness[i] > max:
+                max = pop_fitness[i]
+                max_id = i
+        
+        if max > self.best_score:
+            print(f"Saving {max}")
+            self.my_best = self.population[max_id]
+            self.best_score = max
 
-def main():
+        return pop_fitness
+    
+    def get_top(self):
+        return self.my_best,self.best_score
+
+
+import matplotlib.pyplot as plt
+
+
+
+def train():
     global aiPlayer
 
     file = open("generations.txt",mode='w') #resetar o arquivo
     file.close()
 
     ga_instance = PTGA(num_generations=300,
-                            num_parents_mating=1,
+                            num_parents_mating=10,
                             initial_population=torch_ga.population_weights,
                             fitness_func=fitness_func,
                             on_generation=on_generation,
                             suppress_warnings=True,
-                            mutation_probability=1,
-                            keep_parents=1,
+                            mutation_probability=0.2,
+                            keep_parents=3,
                             stop_criteria=["reach_10000", "saturate_100"],
                             mutation_type='random',
-                            crossover_probability=0)
+                            crossover_probability=0.8)
     
     ga_instance.run()
 
-    # After the generations complete, some plots are showed that summarize how the outputs/fitness values evolve over generations.
-    ga_instance.plot_fitness(title="PyGAD & PyTorch - Iteration vs. Fitness", linewidth=4)
+    print("Train Finished")
 
-    # Returning the details of the best solution.
-    solution, solution_fitness, solution_idx = ga_instance.best_solution()
-    print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
-    print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
-    print(solution)
+    solution, solution_fitness = ga_instance.get_top()
+
+    print(f"Fitness value of the best solution = {solution_fitness}")
+    id_s = int(random.random()*1000)
+    torch.save(solution,f=f'solution{id_s}')
 
 
-main()
+def eval(s_name):
+    solution = torch.load(s_name)
+
+    num_test = 30
+    results = []
+    for i in range(num_test):
+        results += [playGame([solution])[0]]
+    
+    print(f"Resultados = {results}")
+    print(f"Média = {mean(results)}")
+    print(f"Desvio Padrão = {stdev(results)}")
+
+
+
+import sys
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Wrong parameters")
+        exit()
+
+    if sys.argv[1] == 'train':
+        print("Train Starting ... ")
+        train()
+    elif sys.argv[1] == 'eval':
+        print("Starting eval")
+        if len(sys.argv) != 3:
+            print("Missing name of solution file")
+        eval(sys.argv[2])
+    else:
+        print(f"Wrong argv {sys.argv[1]}")
+
+    
+    
+
