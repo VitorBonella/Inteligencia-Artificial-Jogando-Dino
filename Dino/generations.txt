@@ -1,0 +1,162 @@
+Generation = 1
+Fitness    = 48.5
+
+Generation = 2
+Fitness    = 26.0
+
+Generation = 3
+Fitness    = 129.25
+
+Generation = 4
+Fitness    = 211.75
+
+Generation = 5
+Fitness    = 171.5
+
+Generation = 6
+Fitness    = 64.5
+
+Generation = 7
+Fitness    = 251.75
+
+Generation = 8
+Fitness    = 198.0
+
+Generation = 9
+Fitness    = 65.0
+
+Generation = 10
+Fitness    = 293.0
+
+Generation = 11
+Fitness    = 231.25
+
+Generation = 12
+Fitness    = 213.25
+
+Generation = 13
+Fitness    = 141.25
+
+Generation = 14
+Fitness    = 102.75
+
+Generation = 15
+Fitness    = 123.75
+
+Generation = 16
+Fitness    = 99.25
+
+Generation = 17
+Fitness    = 55.0
+
+Generation = 18
+Fitness    = 88.0
+
+Generation = 19
+Fitness    = 59.0
+
+Generation = 20
+Fitness    = 73.5
+
+Generation = 21
+Fitness    = 102.25
+
+Generation = 22
+Fitness    = 106.75
+
+Generation = 23
+Fitness    = 342.25
+
+Generation = 24
+Fitness    = 639.75
+
+Generation = 25
+Fitness    = 222.75
+
+Generation = 26
+Fitness    = 156.0
+
+Generation = 27
+Fitness    = 553.25
+
+Generation = 28
+Fitness    = 130.0
+
+Generation = 29
+Fitness    = 207.75
+
+Generation = 30
+Fitness    = 83.0
+
+Generation = 31
+Fitness    = 798.25
+
+Generation = 32
+Fitness    = 266.75
+
+Generation = 33
+Fitness    = 146.5
+
+Generation = 34
+Fitness    = 121.5
+
+Generation = 35
+Fitness    = 992.0
+
+Generation = 36
+Fitness    = 143.25
+
+Generation = 37
+Fitness    = 139.75
+
+Generation = 38
+Fitness    = 530.0
+
+Generation = 39
+Fitness    = 539.75
+
+Generation = 40
+Fitness    = 297.5
+
+Generation = 41
+Fitness    = 878.5
+
+Generation = 42
+Fitness    = 355.75
+
+Generation = 43
+Fitness    = 384.5
+
+Generation = 44
+Fitness    = 172.0
+
+Generation = 45
+Fitness    = 399.25
+
+Generation = 46
+Fitness    = 314.5
+
+Generation = 47
+Fitness    = 730.25
+
+Generation = 48
+Fitness    = 910.0
+
+Generation = 49
+Fitness    = 372.5
+
+Generation = 50
+Fitness    = 243.5
+
+Generation = 51
+Fitness    = 319.75
+
+Generation = 52
+Fitness    = 657.75
+
+Generation = 53
+Fitness    = 76.25
+
+Generation = 54
+Fitness    = 789.75
+

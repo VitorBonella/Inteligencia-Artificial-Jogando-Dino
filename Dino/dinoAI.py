@@ -296,14 +296,7 @@ def playGame(population):
 
         SCREEN.fill((255, 255, 255))
 
-        distance = 1500
-        obHeight = 0
-        altitude = 0
-        if len(obstacles) != 0:
-            xy = obstacles[0].getXY()
-            distance = xy[0]
-            altitude = xy[1]
-            obHeight = obstacles[0].getHeight()
+        
 
         #if GAME_MODE == "HUMAN_MODE":
             #userInput = playerKeySelector()
@@ -321,8 +314,21 @@ def playGame(population):
 
         for i, player in enumerate(players):
             if not died[i]:
+                distance = 1500
+                obHeight = 0
+                altitude = 0
+                nx_distance = 1500
+                if len(obstacles) != 0:
+                    xy = obstacles[0].getXY()
+                    distance = xy[0]
+                    altitude = xy[1]
+                    obHeight = obstacles[0].getHeight()
+
+                if len(obstacles) > 1:
+                    nx_distance = obstacles[1].getXY()[0]
+
                 dinoHeight = player.getXY()[1]
-                userInput = net_player[i].keySelector(distance, obHeight, game_speed, dinoHeight, altitude)
+                userInput = net_player[i].keySelector(distance/1500, obHeight/123, game_speed/100, dinoHeight/355, altitude/345, nx_distance/1500)
                 player.update(userInput)
                 player.draw(SCREEN)
 
@@ -361,19 +367,17 @@ class KeyNeuralNet(KeyClassifier):
         self.model = model
         self.solution = solution
 
-    def keySelector(self, distance, obHeight, speed,dinoHeight, altitude):
+    def keySelector(self, distance, obHeight, speed,dinoHeight, altitude, nx_distance):
         
         #features ideal* - > speed, distance, obWidth, obHeight, altitude ,dinoHeigth
-
-        data_in = torch.tensor([[distance, obHeight, speed, dinoHeight, altitude]],dtype=torch.float32)
+        data_in = torch.tensor([[distance, obHeight, speed, dinoHeight, altitude, nx_distance]],dtype=torch.float32)
+        #print(data_in)
         prediction = pygad.torchga.predict(model=self.model,solution=self.solution,data=data_in)
         action = prediction[0]
-        if action[0] > 0:
-            return "K_DOWN"
-        elif action[1] > 0:
+        if action[0] > 0.55:
             return "K_UP"        
         
-        return "K_NO"
+        return "K_DOWN"
 
 def manyPlaysResults(rounds):
     results = []
