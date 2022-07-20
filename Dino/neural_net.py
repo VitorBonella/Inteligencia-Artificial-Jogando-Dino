@@ -2,16 +2,12 @@ from torch import relu
 import torch.nn
 import pygad
 
-input_layer = torch.nn.Linear(6, 13)
+input_layer = torch.nn.Linear(6, 5)
 relu_layer = torch.nn.ReLU()
-middle_layer = torch.nn.Linear(13,13)
-#last_layer = torch.nn.Linear(12,6)
-output_layer = torch.nn.Linear(13,1)
+output_layer = torch.nn.Linear(5,1)
 sigmoid_layer = torch.nn.Sigmoid()
 
 model = torch.nn.Sequential(input_layer,
-                            relu_layer,
-                            middle_layer,
                             relu_layer,
                             output_layer,
                             sigmoid_layer)
