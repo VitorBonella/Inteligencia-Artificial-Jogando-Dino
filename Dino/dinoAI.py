@@ -9,6 +9,7 @@ pygame.init()
 
 # Valid values: HUMAN_MODE or AI_MODE
 GAME_MODE = "AI_MODE"
+TRAIN_MODE = 0
 
 # Global Constants
 SCREEN_HEIGHT = 600
@@ -189,12 +190,21 @@ class Bird(Obstacle):
         super().__init__(image, self.type)
 
         # High, middle or ground
-        if random.randint(0, 3) == 0:
-            self.rect.y = 345
-        elif random.randint(0, 2) == 0:
-            self.rect.y = 260
+        if TRAIN_MODE == 0:
+            if random.randint(0, 3) == 0:
+                self.rect.y = 345
+            elif random.randint(0, 2) == 0:
+                self.rect.y = 260
+            else:
+                self.rect.y = 300
         else:
-            self.rect.y = 300
+            p = random.randint(0, 2)
+            if p == 0:
+                self.rect.y = 345
+            elif p == 1:
+                self.rect.y = 260
+            else:
+                self.rect.y = 300
         self.index = 0
 
     def draw(self, SCREEN):
@@ -303,14 +313,25 @@ def playGame(population):
         #else:
             #userInput = aiPlayer.keySelector(distance, obHeight, game_speed, obType)
 
-        if len(obstacles) == 0 or obstacles[-1].getXY()[0] < spawn_dist:
-            spawn_dist = random.randint(0, 670)
-            if random.randint(0, 2) == 0:
-                obstacles.append(SmallCactus(SMALL_CACTUS))
-            elif random.randint(0, 2) == 1:
-                obstacles.append(LargeCactus(LARGE_CACTUS))
-            elif random.randint(0, 5) == 5:
-                obstacles.append(Bird(BIRD))
+        if TRAIN_MODE == 0:
+            if len(obstacles) == 0 or obstacles[-1].getXY()[0] < spawn_dist:
+                spawn_dist = random.randint(0, 670)
+                if random.randint(0, 2) == 0:
+                    obstacles.append(SmallCactus(SMALL_CACTUS))
+                elif random.randint(0, 2) == 1:
+                    obstacles.append(LargeCactus(LARGE_CACTUS))
+                elif random.randint(0, 5) == 5:
+                    obstacles.append(Bird(BIRD))
+        else:
+            if len(obstacles) == 0 or obstacles[-1].getXY()[0] < spawn_dist:
+                spawn_dist = random.randint(0, 670)
+                e = random.randint(0, 2)
+                if e == 0:
+                    obstacles.append(SmallCactus(SMALL_CACTUS))
+                elif e == 1:
+                    obstacles.append(LargeCactus(LARGE_CACTUS))
+                elif e == 2:
+                    obstacles.append(Bird(BIRD))
 
         for i, player in enumerate(players):
             if not died[i]:
@@ -417,6 +438,7 @@ class PTGA(pygad.GA):
         if max > self.best_score:
             print(f"Saving {max}")
             self.my_best = self.population[max_id]
+            torch.save(self.my_best,'best_sol')
             self.best_score = max
 
         return pop_fitness
@@ -435,17 +457,17 @@ def train():
     file = open("generations.txt",mode='w') #resetar o arquivo
     file.close()
 
-    ga_instance = PTGA(num_generations=300,
+    ga_instance = PTGA(num_generations=1200,
                             num_parents_mating=10,
                             initial_population=torch_ga.population_weights,
                             fitness_func=fitness_func,
                             on_generation=on_generation,
                             suppress_warnings=True,
-                            mutation_probability=0.2,
-                            keep_parents=3,
-                            stop_criteria=["reach_10000", "saturate_100"],
+                            mutation_probability=0.3,
+                            keep_parents=1,
+                            stop_criteria=["reach_10000", "saturate_250"],
                             mutation_type='random',
-                            crossover_probability=0.8)
+                            crossover_probability=0.7)
     
     ga_instance.run()
 
@@ -479,6 +501,7 @@ if __name__ == "__main__":
         exit()
 
     if sys.argv[1] == 'train':
+        TRAIN_MODE = 1
         print("Train Starting ... ")
         train()
     elif sys.argv[1] == 'eval':

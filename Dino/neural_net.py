@@ -2,9 +2,9 @@ from torch import relu
 import torch.nn
 import pygad
 
-input_layer = torch.nn.Linear(6, 5)
+input_layer = torch.nn.Linear(6, 6)
 relu_layer = torch.nn.ReLU()
-output_layer = torch.nn.Linear(5,1)
+output_layer = torch.nn.Linear(6,1)
 sigmoid_layer = torch.nn.Sigmoid()
 
 model = torch.nn.Sequential(input_layer,
@@ -15,7 +15,7 @@ model = torch.nn.Sequential(input_layer,
 import pygad.torchga
 
 torch_ga = pygad.torchga.TorchGA(model=model,
-                                num_solutions=55)
+                                num_solutions=100)
 
 def on_generation(ga_instance):
     file = open("generations.txt",mode='a')

@@ -1,162 +1,906 @@
 Generation = 1
-Fitness    = 48.5
+Fitness    = 70.75
 
 Generation = 2
-Fitness    = 26.0
+Fitness    = 24.5
 
 Generation = 3
-Fitness    = 129.25
+Fitness    = 70.25
 
 Generation = 4
-Fitness    = 211.75
+Fitness    = 53.25
 
 Generation = 5
-Fitness    = 171.5
+Fitness    = 93.0
 
 Generation = 6
-Fitness    = 64.5
+Fitness    = 143.75
 
 Generation = 7
-Fitness    = 251.75
+Fitness    = 88.25
 
 Generation = 8
-Fitness    = 198.0
+Fitness    = 144.25
 
 Generation = 9
-Fitness    = 65.0
+Fitness    = 113.0
 
 Generation = 10
-Fitness    = 293.0
+Fitness    = 69.25
 
 Generation = 11
-Fitness    = 231.25
+Fitness    = 139.25
 
 Generation = 12
-Fitness    = 213.25
-
-Generation = 13
-Fitness    = 141.25
-
-Generation = 14
-Fitness    = 102.75
-
-Generation = 15
-Fitness    = 123.75
-
-Generation = 16
-Fitness    = 99.25
-
-Generation = 17
-Fitness    = 55.0
-
-Generation = 18
-Fitness    = 88.0
-
-Generation = 19
-Fitness    = 59.0
-
-Generation = 20
-Fitness    = 73.5
-
-Generation = 21
-Fitness    = 102.25
-
-Generation = 22
-Fitness    = 106.75
-
-Generation = 23
-Fitness    = 342.25
-
-Generation = 24
-Fitness    = 639.75
-
-Generation = 25
-Fitness    = 222.75
-
-Generation = 26
-Fitness    = 156.0
-
-Generation = 27
-Fitness    = 553.25
-
-Generation = 28
-Fitness    = 130.0
-
-Generation = 29
-Fitness    = 207.75
-
-Generation = 30
-Fitness    = 83.0
-
-Generation = 31
-Fitness    = 798.25
-
-Generation = 32
-Fitness    = 266.75
-
-Generation = 33
-Fitness    = 146.5
-
-Generation = 34
-Fitness    = 121.5
-
-Generation = 35
-Fitness    = 992.0
-
-Generation = 36
-Fitness    = 143.25
-
-Generation = 37
-Fitness    = 139.75
-
-Generation = 38
-Fitness    = 530.0
-
-Generation = 39
-Fitness    = 539.75
-
-Generation = 40
-Fitness    = 297.5
-
-Generation = 41
-Fitness    = 878.5
-
-Generation = 42
-Fitness    = 355.75
-
-Generation = 43
-Fitness    = 384.5
-
-Generation = 44
-Fitness    = 172.0
-
-Generation = 45
-Fitness    = 399.25
-
-Generation = 46
-Fitness    = 314.5
-
-Generation = 47
-Fitness    = 730.25
-
-Generation = 48
-Fitness    = 910.0
-
-Generation = 49
-Fitness    = 372.5
-
-Generation = 50
-Fitness    = 243.5
-
-Generation = 51
-Fitness    = 319.75
-
-Generation = 52
-Fitness    = 657.75
-
-Generation = 53
 Fitness    = 76.25
 
+Generation = 13
+Fitness    = 511.5
+
+Generation = 14
+Fitness    = 305.0
+
+Generation = 15
+Fitness    = 143.5
+
+Generation = 16
+Fitness    = 277.0
+
+Generation = 17
+Fitness    = 335.0
+
+Generation = 18
+Fitness    = 421.5
+
+Generation = 19
+Fitness    = 494.25
+
+Generation = 20
+Fitness    = 428.75
+
+Generation = 21
+Fitness    = 510.0
+
+Generation = 22
+Fitness    = 649.75
+
+Generation = 23
+Fitness    = 66.25
+
+Generation = 24
+Fitness    = 102.25
+
+Generation = 25
+Fitness    = 93.5
+
+Generation = 26
+Fitness    = 154.75
+
+Generation = 27
+Fitness    = 574.25
+
+Generation = 28
+Fitness    = 429.25
+
+Generation = 29
+Fitness    = 637.75
+
+Generation = 30
+Fitness    = 930.5
+
+Generation = 31
+Fitness    = 804.5
+
+Generation = 32
+Fitness    = 143.75
+
+Generation = 33
+Fitness    = 447.25
+
+Generation = 34
+Fitness    = 629.25
+
+Generation = 35
+Fitness    = 145.25
+
+Generation = 36
+Fitness    = 507.0
+
+Generation = 37
+Fitness    = 833.25
+
+Generation = 38
+Fitness    = 452.75
+
+Generation = 39
+Fitness    = 640.75
+
+Generation = 40
+Fitness    = 756.0
+
+Generation = 41
+Fitness    = 423.5
+
+Generation = 42
+Fitness    = 973.5
+
+Generation = 43
+Fitness    = 278.5
+
+Generation = 44
+Fitness    = 594.75
+
+Generation = 45
+Fitness    = 394.75
+
+Generation = 46
+Fitness    = 227.75
+
+Generation = 47
+Fitness    = 414.75
+
+Generation = 48
+Fitness    = 1287.0
+
+Generation = 49
+Fitness    = 597.5
+
+Generation = 50
+Fitness    = 1121.5
+
+Generation = 51
+Fitness    = 138.0
+
+Generation = 52
+Fitness    = 255.0
+
+Generation = 53
+Fitness    = 470.25
+
 Generation = 54
-Fitness    = 789.75
+Fitness    = 668.0
+
+Generation = 55
+Fitness    = 110.25
+
+Generation = 56
+Fitness    = 544.0
+
+Generation = 57
+Fitness    = 769.0
+
+Generation = 58
+Fitness    = 693.75
+
+Generation = 59
+Fitness    = 423.75
+
+Generation = 60
+Fitness    = 938.0
+
+Generation = 61
+Fitness    = 167.5
+
+Generation = 62
+Fitness    = 1094.5
+
+Generation = 63
+Fitness    = 706.0
+
+Generation = 64
+Fitness    = 700.25
+
+Generation = 65
+Fitness    = 918.0
+
+Generation = 66
+Fitness    = 543.5
+
+Generation = 67
+Fitness    = 812.25
+
+Generation = 68
+Fitness    = 1015.25
+
+Generation = 69
+Fitness    = 998.75
+
+Generation = 70
+Fitness    = 559.75
+
+Generation = 71
+Fitness    = 876.5
+
+Generation = 72
+Fitness    = 1106.75
+
+Generation = 73
+Fitness    = 973.25
+
+Generation = 74
+Fitness    = 695.0
+
+Generation = 75
+Fitness    = 516.5
+
+Generation = 76
+Fitness    = 1127.75
+
+Generation = 77
+Fitness    = 1119.5
+
+Generation = 78
+Fitness    = 1204.0
+
+Generation = 79
+Fitness    = 1103.25
+
+Generation = 80
+Fitness    = 929.25
+
+Generation = 81
+Fitness    = 1173.25
+
+Generation = 82
+Fitness    = 1190.25
+
+Generation = 83
+Fitness    = 814.5
+
+Generation = 84
+Fitness    = 1189.25
+
+Generation = 85
+Fitness    = 122.0
+
+Generation = 86
+Fitness    = 1236.75
+
+Generation = 87
+Fitness    = 1113.25
+
+Generation = 88
+Fitness    = 1128.5
+
+Generation = 89
+Fitness    = 950.5
+
+Generation = 90
+Fitness    = 1201.25
+
+Generation = 91
+Fitness    = 907.25
+
+Generation = 92
+Fitness    = 661.5
+
+Generation = 93
+Fitness    = 1455.0
+
+Generation = 94
+Fitness    = 981.5
+
+Generation = 95
+Fitness    = 1463.75
+
+Generation = 96
+Fitness    = 1434.25
+
+Generation = 97
+Fitness    = 1310.0
+
+Generation = 98
+Fitness    = 1207.25
+
+Generation = 99
+Fitness    = 636.5
+
+Generation = 100
+Fitness    = 1311.0
+
+Generation = 101
+Fitness    = 1021.0
+
+Generation = 102
+Fitness    = 1205.75
+
+Generation = 103
+Fitness    = 968.5
+
+Generation = 104
+Fitness    = 1321.75
+
+Generation = 105
+Fitness    = 930.25
+
+Generation = 106
+Fitness    = 996.25
+
+Generation = 107
+Fitness    = 1508.75
+
+Generation = 108
+Fitness    = 1181.5
+
+Generation = 109
+Fitness    = 1236.25
+
+Generation = 110
+Fitness    = 1231.5
+
+Generation = 111
+Fitness    = 1409.5
+
+Generation = 112
+Fitness    = 1423.25
+
+Generation = 113
+Fitness    = 1014.25
+
+Generation = 114
+Fitness    = 1239.0
+
+Generation = 115
+Fitness    = 1270.75
+
+Generation = 116
+Fitness    = 1176.5
+
+Generation = 117
+Fitness    = 1245.75
+
+Generation = 118
+Fitness    = 646.25
+
+Generation = 119
+Fitness    = 1009.25
+
+Generation = 120
+Fitness    = 1106.25
+
+Generation = 121
+Fitness    = 1293.5
+
+Generation = 122
+Fitness    = 1129.0
+
+Generation = 123
+Fitness    = 1145.0
+
+Generation = 124
+Fitness    = 1113.75
+
+Generation = 125
+Fitness    = 1248.5
+
+Generation = 126
+Fitness    = 1512.75
+
+Generation = 127
+Fitness    = 1211.5
+
+Generation = 128
+Fitness    = 1676.75
+
+Generation = 129
+Fitness    = 1618.75
+
+Generation = 130
+Fitness    = 1122.25
+
+Generation = 131
+Fitness    = 1216.75
+
+Generation = 132
+Fitness    = 1417.5
+
+Generation = 133
+Fitness    = 1433.25
+
+Generation = 134
+Fitness    = 483.5
+
+Generation = 135
+Fitness    = 1357.0
+
+Generation = 136
+Fitness    = 1260.75
+
+Generation = 137
+Fitness    = 1241.0
+
+Generation = 138
+Fitness    = 1503.25
+
+Generation = 139
+Fitness    = 1149.0
+
+Generation = 140
+Fitness    = 1177.5
+
+Generation = 141
+Fitness    = 1539.5
+
+Generation = 142
+Fitness    = 1441.5
+
+Generation = 143
+Fitness    = 1440.0
+
+Generation = 144
+Fitness    = 1679.75
+
+Generation = 145
+Fitness    = 1611.25
+
+Generation = 146
+Fitness    = 1246.5
+
+Generation = 147
+Fitness    = 1560.0
+
+Generation = 148
+Fitness    = 1324.5
+
+Generation = 149
+Fitness    = 1178.75
+
+Generation = 150
+Fitness    = 1534.5
+
+Generation = 151
+Fitness    = 1438.5
+
+Generation = 152
+Fitness    = 1411.5
+
+Generation = 153
+Fitness    = 1225.0
+
+Generation = 154
+Fitness    = 1452.75
+
+Generation = 155
+Fitness    = 1461.25
+
+Generation = 156
+Fitness    = 1349.75
+
+Generation = 157
+Fitness    = 1460.25
+
+Generation = 158
+Fitness    = 1379.0
+
+Generation = 159
+Fitness    = 1525.5
+
+Generation = 160
+Fitness    = 1394.75
+
+Generation = 161
+Fitness    = 991.75
+
+Generation = 162
+Fitness    = 1463.25
+
+Generation = 163
+Fitness    = 1477.0
+
+Generation = 164
+Fitness    = 1240.5
+
+Generation = 165
+Fitness    = 837.25
+
+Generation = 166
+Fitness    = 1178.25
+
+Generation = 167
+Fitness    = 1341.0
+
+Generation = 168
+Fitness    = 1287.25
+
+Generation = 169
+Fitness    = 1332.0
+
+Generation = 170
+Fitness    = 1278.75
+
+Generation = 171
+Fitness    = 1365.75
+
+Generation = 172
+Fitness    = 1003.5
+
+Generation = 173
+Fitness    = 1125.5
+
+Generation = 174
+Fitness    = 1162.75
+
+Generation = 175
+Fitness    = 1207.25
+
+Generation = 176
+Fitness    = 1582.25
+
+Generation = 177
+Fitness    = 1222.25
+
+Generation = 178
+Fitness    = 1138.5
+
+Generation = 179
+Fitness    = 1202.25
+
+Generation = 180
+Fitness    = 1531.0
+
+Generation = 181
+Fitness    = 1480.25
+
+Generation = 182
+Fitness    = 1704.5
+
+Generation = 183
+Fitness    = 1425.0
+
+Generation = 184
+Fitness    = 1155.0
+
+Generation = 185
+Fitness    = 1683.25
+
+Generation = 186
+Fitness    = 1522.5
+
+Generation = 187
+Fitness    = 1245.75
+
+Generation = 188
+Fitness    = 1398.5
+
+Generation = 189
+Fitness    = 1356.25
+
+Generation = 190
+Fitness    = 1439.75
+
+Generation = 191
+Fitness    = 1344.0
+
+Generation = 192
+Fitness    = 1458.5
+
+Generation = 193
+Fitness    = 1174.5
+
+Generation = 194
+Fitness    = 1166.75
+
+Generation = 195
+Fitness    = 1353.75
+
+Generation = 196
+Fitness    = 1371.75
+
+Generation = 197
+Fitness    = 1145.75
+
+Generation = 198
+Fitness    = 1111.75
+
+Generation = 199
+Fitness    = 1108.5
+
+Generation = 200
+Fitness    = 1398.75
+
+Generation = 201
+Fitness    = 967.5
+
+Generation = 202
+Fitness    = 1197.25
+
+Generation = 203
+Fitness    = 1092.5
+
+Generation = 204
+Fitness    = 2123.75
+
+Generation = 205
+Fitness    = 1303.25
+
+Generation = 206
+Fitness    = 979.75
+
+Generation = 207
+Fitness    = 1529.0
+
+Generation = 208
+Fitness    = 939.5
+
+Generation = 209
+Fitness    = 1419.25
+
+Generation = 210
+Fitness    = 1224.25
+
+Generation = 211
+Fitness    = 1135.5
+
+Generation = 212
+Fitness    = 1398.0
+
+Generation = 213
+Fitness    = 1650.0
+
+Generation = 214
+Fitness    = 1364.0
+
+Generation = 215
+Fitness    = 1604.25
+
+Generation = 216
+Fitness    = 1599.75
+
+Generation = 217
+Fitness    = 1290.25
+
+Generation = 218
+Fitness    = 1411.75
+
+Generation = 219
+Fitness    = 1950.25
+
+Generation = 220
+Fitness    = 1134.0
+
+Generation = 221
+Fitness    = 1279.0
+
+Generation = 222
+Fitness    = 1365.0
+
+Generation = 223
+Fitness    = 1732.75
+
+Generation = 224
+Fitness    = 1398.75
+
+Generation = 225
+Fitness    = 1158.5
+
+Generation = 226
+Fitness    = 1215.25
+
+Generation = 227
+Fitness    = 1483.0
+
+Generation = 228
+Fitness    = 1143.25
+
+Generation = 229
+Fitness    = 921.75
+
+Generation = 230
+Fitness    = 1193.25
+
+Generation = 231
+Fitness    = 1557.0
+
+Generation = 232
+Fitness    = 1151.75
+
+Generation = 233
+Fitness    = 1459.75
+
+Generation = 234
+Fitness    = 1442.5
+
+Generation = 235
+Fitness    = 1703.25
+
+Generation = 236
+Fitness    = 1321.75
+
+Generation = 237
+Fitness    = 1379.0
+
+Generation = 238
+Fitness    = 1581.75
+
+Generation = 239
+Fitness    = 1469.25
+
+Generation = 240
+Fitness    = 1578.75
+
+Generation = 241
+Fitness    = 1349.25
+
+Generation = 242
+Fitness    = 1325.75
+
+Generation = 243
+Fitness    = 1196.5
+
+Generation = 244
+Fitness    = 1237.75
+
+Generation = 245
+Fitness    = 1681.75
+
+Generation = 246
+Fitness    = 1412.25
+
+Generation = 247
+Fitness    = 1319.25
+
+Generation = 248
+Fitness    = 1504.5
+
+Generation = 249
+Fitness    = 1174.5
+
+Generation = 250
+Fitness    = 1551.25
+
+Generation = 251
+Fitness    = 1542.25
+
+Generation = 252
+Fitness    = 1287.0
+
+Generation = 253
+Fitness    = 1409.0
+
+Generation = 254
+Fitness    = 1337.25
+
+Generation = 255
+Fitness    = 1457.25
+
+Generation = 256
+Fitness    = 1235.75
+
+Generation = 257
+Fitness    = 1416.25
+
+Generation = 258
+Fitness    = 1443.0
+
+Generation = 259
+Fitness    = 1406.75
+
+Generation = 260
+Fitness    = 1428.5
+
+Generation = 261
+Fitness    = 1465.75
+
+Generation = 262
+Fitness    = 1573.0
+
+Generation = 263
+Fitness    = 1640.5
+
+Generation = 264
+Fitness    = 1422.25
+
+Generation = 265
+Fitness    = 1162.5
+
+Generation = 266
+Fitness    = 1630.0
+
+Generation = 267
+Fitness    = 1668.5
+
+Generation = 268
+Fitness    = 967.25
+
+Generation = 269
+Fitness    = 1913.25
+
+Generation = 270
+Fitness    = 1144.5
+
+Generation = 271
+Fitness    = 1889.0
+
+Generation = 272
+Fitness    = 1319.0
+
+Generation = 273
+Fitness    = 1400.25
+
+Generation = 274
+Fitness    = 1285.25
+
+Generation = 275
+Fitness    = 1436.75
+
+Generation = 276
+Fitness    = 1639.25
+
+Generation = 277
+Fitness    = 1329.0
+
+Generation = 278
+Fitness    = 1875.0
+
+Generation = 279
+Fitness    = 1260.75
+
+Generation = 280
+Fitness    = 1401.25
+
+Generation = 281
+Fitness    = 1522.0
+
+Generation = 282
+Fitness    = 1226.75
+
+Generation = 283
+Fitness    = 1252.0
+
+Generation = 284
+Fitness    = 1166.25
+
+Generation = 285
+Fitness    = 1190.0
+
+Generation = 286
+Fitness    = 1785.0
+
+Generation = 287
+Fitness    = 1770.25
+
+Generation = 288
+Fitness    = 1006.75
+
+Generation = 289
+Fitness    = 1447.0
+
+Generation = 290
+Fitness    = 1337.25
+
+Generation = 291
+Fitness    = 1665.0
+
+Generation = 292
+Fitness    = 1601.0
+
+Generation = 293
+Fitness    = 1517.5
+
+Generation = 294
+Fitness    = 1177.25
+
+Generation = 295
+Fitness    = 1476.75
+
+Generation = 296
+Fitness    = 1217.75
+
+Generation = 297
+Fitness    = 1018.0
+
+Generation = 298
+Fitness    = 1218.5
+
+Generation = 299
+Fitness    = 1164.25
+
+Generation = 300
+Fitness    = 1582.75
+
+Generation = 301
+Fitness    = 1474.25
+
+Generation = 302
+Fitness    = 1540.25
 
