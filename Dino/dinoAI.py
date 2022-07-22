@@ -451,23 +451,30 @@ import matplotlib.pyplot as plt
 
 
 
-def train():
+def train(init_sol = None):
     global aiPlayer
 
     file = open("generations.txt",mode='w') #resetar o arquivo
     file.close()
 
+    if init_sol == None:
+        init_pop = torch_ga.population_weights
+    else:
+        init_sol = torch.load(init_sol)
+        init_pop = [init_sol for i in range(100)]
+
     ga_instance = PTGA(num_generations=1200,
-                            num_parents_mating=10,
-                            initial_population=torch_ga.population_weights,
+                            num_parents_mating=20,
+                            initial_population=init_pop,
                             fitness_func=fitness_func,
                             on_generation=on_generation,
                             suppress_warnings=True,
-                            mutation_probability=0.3,
-                            keep_parents=1,
+                            mutation_probability=0.5,
+                            keep_parents=5,
                             stop_criteria=["reach_10000", "saturate_250"],
                             mutation_type='random',
-                            crossover_probability=0.7)
+                            crossover_probability=0.8,
+                            crossover_type='two_points')
     
     ga_instance.run()
 
@@ -503,7 +510,11 @@ if __name__ == "__main__":
     if sys.argv[1] == 'train':
         TRAIN_MODE = 1
         print("Train Starting ... ")
-        train()
+        if len(sys.argv) == 3:
+            train(sys.argv[2])
+        else:
+            train()
+
     elif sys.argv[1] == 'eval':
         print("Starting eval")
         if len(sys.argv) != 3:
