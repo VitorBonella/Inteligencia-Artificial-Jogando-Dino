@@ -14,7 +14,7 @@ TRAIN_MODE = 0
 # Global Constants
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
-SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
 
 RUNNING = [pygame.image.load(os.path.join("Assets/Dino", "DinoRun1.png")),
            pygame.image.load(os.path.join("Assets/Dino", "DinoRun2.png"))]
@@ -119,6 +119,9 @@ class Dinosaur:
             self.dino_rect.y = self.Y_POS
 
     def draw(self, SCREEN):
+        if TRAIN_MODE == 1:
+            pass
+
         SCREEN.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
         pygame.draw.rect(SCREEN, self.color, (self.dino_rect.x, self.dino_rect.y, self.dino_rect.width, self.dino_rect.height), 2)
 
@@ -140,6 +143,8 @@ class Cloud:
             self.y = random.randint(50, 100)
 
     def draw(self, SCREEN):
+        if TRAIN_MODE == 1:
+            pass
         SCREEN.blit(self.image, (self.x, self.y))
 
 
@@ -158,6 +163,8 @@ class Obstacle():
             obstacles.pop(0)
 
     def draw(self, SCREEN):
+        if TRAIN_MODE == 1:
+            pass
         SCREEN.blit(self.image[self.type], self.rect)
 
     def getXY(self):
@@ -208,6 +215,9 @@ class Bird(Obstacle):
         self.index = 0
 
     def draw(self, SCREEN):
+        if TRAIN_MODE == 1:
+            pass
+
         if self.index >= 19:
             self.index = 0
         SCREEN.blit(self.image[self.index // 10], self.rect)
@@ -272,24 +282,21 @@ def playGame(population):
         text = font.render("Points: " + str(int(points)), True, (0, 0, 0))
         textRect = text.get_rect()
         textRect.center = (1000, 40)
-        SCREEN.blit(text, textRect)
+        if TRAIN_MODE == 0:
+            SCREEN.blit(text, textRect)
 
     def background():
+        
         global x_pos_bg, y_pos_bg
         image_width = BG.get_width()
-        SCREEN.blit(BG, (x_pos_bg, y_pos_bg))
-        SCREEN.blit(BG, (image_width + x_pos_bg, y_pos_bg))
-        if x_pos_bg <= -image_width:
+        if TRAIN_MODE == 0:
+            SCREEN.blit(BG, (x_pos_bg, y_pos_bg))
             SCREEN.blit(BG, (image_width + x_pos_bg, y_pos_bg))
+        if x_pos_bg <= -image_width:
+            if TRAIN_MODE == 0:
+                SCREEN.blit(BG, (image_width + x_pos_bg, y_pos_bg))
             x_pos_bg = 0
         x_pos_bg -= game_speed
-
-    def get_numeric_type(ObType):
-        if isinstance(ObType,SmallCactus):
-            return 0
-        elif isinstance(ObType,LargeCactus):
-            return 1
-        return 2 #passaro
 
     def statistics():
         text_1 = font.render(f'Dinosaurs Alive:  {str(died.count(False))}', True, (0, 0, 0))
@@ -304,7 +311,8 @@ def playGame(population):
                 run = False
                 exit()
 
-        SCREEN.fill((255, 255, 255))
+        if TRAIN_MODE == 0:
+            SCREEN.fill((255, 255, 255))
 
         
 
@@ -351,11 +359,13 @@ def playGame(population):
                 dinoHeight = player.getXY()[1]
                 userInput = net_player[i].keySelector(distance/1500, obHeight/123, game_speed/100, dinoHeight/355, altitude/345, nx_distance/1500)
                 player.update(userInput)
-                player.draw(SCREEN)
+                if TRAIN_MODE == 0:
+                    player.draw(SCREEN)
 
         for obstacle in list(obstacles):
             obstacle.update()
-            obstacle.draw(SCREEN)
+            if TRAIN_MODE == 0:
+                obstacle.draw(SCREEN)
             for i, player in enumerate(players):
                 if player.dino_rect.colliderect(obstacle.rect) and died[i] == False:
                     solution_fitness[i] = points
@@ -366,13 +376,16 @@ def playGame(population):
         
         
         background()
-        cloud.draw(SCREEN)
+        if TRAIN_MODE == 0:
+            cloud.draw(SCREEN)
         cloud.update()
-        statistics()
+        if TRAIN_MODE == 0:
+            statistics()
         score()
 
         clock.tick(60)
-        pygame.display.update()
+        if TRAIN_MODE == 0:
+            pygame.display.update()
 
     return solution_fitness
 
@@ -464,17 +477,16 @@ def train(init_sol = None):
         init_pop = [init_sol for i in range(100)]
 
     ga_instance = PTGA(num_generations=1200,
-                            num_parents_mating=20,
+                            num_parents_mating=1,
                             initial_population=init_pop,
                             fitness_func=fitness_func,
                             on_generation=on_generation,
                             suppress_warnings=True,
-                            mutation_probability=0.5,
-                            keep_parents=5,
+                            mutation_probability=1,
+                            keep_parents=1,
                             stop_criteria=["reach_10000", "saturate_250"],
                             mutation_type='random',
-                            crossover_probability=0.8,
-                            crossover_type='two_points')
+                            crossover_probability=0)
     
     ga_instance.run()
 
@@ -516,6 +528,7 @@ if __name__ == "__main__":
             train()
 
     elif sys.argv[1] == 'eval':
+        SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         print("Starting eval")
         if len(sys.argv) != 3:
             print("Missing name of solution file")
