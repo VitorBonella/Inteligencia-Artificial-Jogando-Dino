@@ -15,7 +15,7 @@ model = torch.nn.Sequential(input_layer,
 import pygad.torchga
 
 torch_ga = pygad.torchga.TorchGA(model=model,
-                                num_solutions=2000)
+                                num_solutions=30)
 
 def on_generation(ga_instance):
     file = open("generations.txt",mode='a')

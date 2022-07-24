@@ -268,7 +268,10 @@ def playGame(population):
         global points, game_speed
         points += 0.25
         if points % 100 == 0:
-            game_speed += 1
+            if TRAIN_MODE == 1:
+                game_speed += 3
+            else:
+                game_speed += 1
 
         text = font.render("Points: " + str(int(points)), True, (0, 0, 0))
         textRect = text.get_rect()
@@ -399,12 +402,13 @@ class KeyNeuralNet(KeyClassifier):
         
         return "K_DOWN"
 
-def manyPlaysResults(rounds):
+def manyPlaysResults(rounds,solutions):
     results = []
     for round in range(rounds):
-        results += [playGame()]
+        results += [playGame(solutions)]
     npResults = np.asarray(results)
-    return (results, npResults.mean() - npResults.std())
+    #print(npResults.mean(axis=0))
+    return (results, npResults.mean(axis=0) - npResults.std(axis=0))
 
 from neural_net import torch_ga, on_generation, model
 
@@ -425,7 +429,8 @@ class PTGA(pygad.GA):
 
     def cal_pop_fitness(self):
 
-        pop_fitness = playGame(self.population)
+        #pop_fitness = playGame(self.population)
+        pop_fitness = manyPlaysResults(3,self.population)[1]
         #print(pop_fitness)
         max = 0
         max_id = 0
@@ -460,20 +465,19 @@ def train(init_sol = None):
         init_pop = torch_ga.population_weights
     else:
         init_sol = torch.load(init_sol)
-        init_pop = [init_sol for i in range(100)]
+        init_pop = [init_sol for i in range(30)]
 
     ga_instance = PTGA(num_generations=1200,
-                            num_parents_mating=4,
+                            num_parents_mating=2,
                             initial_population=init_pop,
                             fitness_func=fitness_func,
                             on_generation=on_generation,
                             suppress_warnings=True,
-                            mutation_percent_genes=5,
-                            init_range_low=-2,
-                            init_range_high=5,
+                            mutation_percent_genes=10,
                             keep_parents=1,
                             stop_criteria=["reach_10000", "saturate_250"],
-                            mutation_type='random'
+                            mutation_type='random',
+                            crossover_probability=0.7
                             )
     
     ga_instance.run()
