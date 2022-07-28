@@ -4,6 +4,15 @@ Aluno> Vitor Berger Bonella
 
 Entrar no diretorio Dino
 
+## Requisitos
+
+Instalar o pytorch seguindo as instruções de acordo com sua maquina https://pytorch.org/get-started/locally/
+
+Instalar o pygad:
+```
+pip install pygad
+```
+
 ## Treino
 
 Para treinar e salvar a melhor solução->
