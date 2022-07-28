@@ -1,5 +1,7 @@
 # Inteligencia-Artificial-Jogando-Dino
 
+Aluno> Vitor Berger Bonella
+
 Entrar no diretorio Dino
 
 ## Treino
