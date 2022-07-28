@@ -16,7 +16,6 @@ SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-
 RUNNING = [pygame.image.load(os.path.join("Assets/Dino", "DinoRun1.png")),
            pygame.image.load(os.path.join("Assets/Dino", "DinoRun2.png"))]
 JUMPING = pygame.image.load(os.path.join("Assets/Dino", "DinoJump.png"))
@@ -141,6 +140,7 @@ class Cloud:
             self.y = random.randint(50, 100)
 
     def draw(self, SCREEN):
+
         SCREEN.blit(self.image, (self.x, self.y))
 
 
@@ -159,6 +159,7 @@ class Obstacle():
             obstacles.pop(0)
 
     def draw(self, SCREEN):
+
         SCREEN.blit(self.image[self.type], self.rect)
 
     def getXY(self):
@@ -283,9 +284,11 @@ def playGame(population):
         
         global x_pos_bg, y_pos_bg
         image_width = BG.get_width()
+
         SCREEN.blit(BG, (x_pos_bg, y_pos_bg))
         SCREEN.blit(BG, (image_width + x_pos_bg, y_pos_bg))
         if x_pos_bg <= -image_width:
+
             SCREEN.blit(BG, (image_width + x_pos_bg, y_pos_bg))
             x_pos_bg = 0
         x_pos_bg -= game_speed
@@ -351,10 +354,12 @@ def playGame(population):
                 dinoHeight = player.getXY()[1]
                 userInput = net_player[i].keySelector(distance/1500, obHeight/123, game_speed/100, dinoHeight/355, altitude/345, nx_distance/1500)
                 player.update(userInput)
+                
                 player.draw(SCREEN)
 
         for obstacle in list(obstacles):
             obstacle.update()
+ 
             obstacle.draw(SCREEN)
             for i, player in enumerate(players):
                 if player.dino_rect.colliderect(obstacle.rect) and died[i] == False:
@@ -367,13 +372,16 @@ def playGame(population):
         
         background()
 
+
         cloud.draw(SCREEN)
-        cloud.update()
         statistics()
         score()
+        
+        cloud.update()
+        
+
 
         clock.tick(60)
-
         pygame.display.update()
 
     return solution_fitness
@@ -465,7 +473,7 @@ def train(init_sol = None):
         init_pop = torch_ga.population_weights
     else:
         init_sol = torch.load(init_sol)
-        init_pop = [init_sol for i in range(30)]
+        init_pop = [init_sol for i in range(50)]
 
     ga_instance = PTGA(num_generations=1200,
                             num_parents_mating=2,
@@ -475,9 +483,8 @@ def train(init_sol = None):
                             suppress_warnings=True,
                             mutation_percent_genes=10,
                             keep_parents=1,
-                            stop_criteria=["reach_10000", "saturate_250"],
-                            mutation_type='random',
-                            crossover_probability=0.7
+                            stop_criteria=["reach_10000"],
+                            mutation_type='random'
                             )
     
     ga_instance.run()
